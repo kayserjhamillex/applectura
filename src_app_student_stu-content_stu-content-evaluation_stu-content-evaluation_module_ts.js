@@ -311,9 +311,10 @@ let StuContentEvaluationPage = class StuContentEvaluationPage {
             this.codigoprogreso = this.progreso.id;
             const filtro = this.progreso.Progreso;
             if (filtro < 100) {
-                window.location.reload();
+                this.redireccionar();
             }
             const parametrito = this.progreso.LibroId;
+            this.intentospermitidos = 3 - this.progreso.NumeroIntento;
             this.cuestionarioService.getsearchCuestionariobylibro(parametrito).subscribe(rescuestionarios => {
                 this.cuestionarios = rescuestionarios;
                 this.numeropreguntas = this.cuestionarios.length;
@@ -433,13 +434,9 @@ let StuContentEvaluationPage = class StuContentEvaluationPage {
             this.progreso.NotaCuestionario = lanota;
         }
         this.progreso.NumeroIntento = this.progreso.NumeroIntento + 1;
-        console.log(this.resoluciones);
-        console.log(this.progreso);
         for (const resp of this.resoluciones) {
-            console.log(resp);
             this.resolucionService.saveResolucion(resp).subscribe(ressaveresolucion => {
                 this.resolucion1 = ressaveresolucion;
-                console.log(this.resolucion1);
             }, err => {
                 console.log('Error save resolucion');
             });
@@ -456,6 +453,9 @@ let StuContentEvaluationPage = class StuContentEvaluationPage {
             'student',
             'stu-content'
         ]);
+    }
+    redireccionar() {
+        window.history.back();
     }
     otrointento() {
         window.location.reload();
@@ -495,7 +495,7 @@ module.exports = "ion-title.title-large {\n  color: #c897d8;\n  font-size: 30px;
   \********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-title>\r\n      REFORZANDO TU APRENDIZAJE\r\n    </ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<div class=\"main_content_div\">\r\n  <ion-grid fixed>\r\n    <ion-row>\r\n       <ion-col size=\"12\" *ngFor=\"let item of cuestionariofiltrado\">\r\n        <div class=\"col_div col_div_pregunta\">\r\n          <h2>\r\n            {{item.Pregunta}}\r\n          </h2>\r\n        </div>\r\n        <br>\r\n        <ion-list>\r\n          <ion-radio-group>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta1}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta1\"></ion-radio>\r\n            </ion-item>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta2}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta2\"></ion-radio>\r\n            </ion-item>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta3}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta3\"></ion-radio>\r\n            </ion-item>\r\n            </ion-radio-group>\r\n        </ion-list>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera || progreso.NotaCuestionario === 20\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n          <ion-label color=\"primary\">\r\n            Calificacion: {{progreso.NotaCuestionario}}/20\r\n          </ion-label>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"!bandera\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n        <!-- <ion-button\r\n          shape=\"round\"\r\n          (click)=\"comprobarrespuesta()\">\r\n              Calificar\r\n          </ion-button> -->\r\n          <ion-button\r\n          shape=\"round\"\r\n          [disabled]=\"(progreso.Progreso < 100 || progreso.NotaCuestionario === 20 || progreso.NumeroIntento > 2)? true:false\"\r\n          (click)=\"comprobarrespuesta()\">\r\n              Calificar\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n        <ion-button\r\n          shape=\"round\"\r\n          [disabled]=\"(progreso.NumeroIntento > 2)? true:false\"\r\n          (click)=\"comprobarrespuesta()\">\r\n              Otro Intento\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n        <ion-button\r\n          shape=\"round\"\r\n          (click)=\"comprobarrespuesta()\">\r\n              Terminar\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</div>\r\n";
+module.exports = "<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-title>\r\n      REFORZANDO TU APRENDIZAJE\r\n    </ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<div class=\"main_content_div\">\r\n  <ion-grid fixed>\r\n    <ion-row>\r\n       <ion-col size=\"12\" *ngFor=\"let item of cuestionariofiltrado\">\r\n        <div class=\"col_div col_div_pregunta\">\r\n          <h2>\r\n            {{item.Pregunta}}\r\n          </h2>\r\n        </div>\r\n        <br>\r\n        <ion-list>\r\n          <ion-radio-group>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta1}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta1\"></ion-radio>\r\n            </ion-item>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta2}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta2\"></ion-radio>\r\n            </ion-item>\r\n            <ion-item (click)=\"agregarrespuesta(item.Respuesta1, item.id)\">\r\n              <ion-label>\r\n                {{item.Respuesta3}}\r\n              </ion-label>\r\n              <ion-radio color=\"secondary\" slot=\"end\" value=\"item.Respuesta3\"></ion-radio>\r\n            </ion-item>\r\n            </ion-radio-group>\r\n        </ion-list>\r\n      </ion-col>\r\n      <ion-col size=\"12\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n          <ion-label color=\"primary\">\r\n            Intentos Restantes: {{intentospermitidos}}\r\n          </ion-label>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera || progreso.NotaCuestionario === 20 || progreso.NumeroIntento > 2\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n          <ion-label color=\"primary\">\r\n            Calificacion: {{progreso.NotaCuestionario}}/20\r\n          </ion-label>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"!bandera\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n          <ion-button\r\n          shape=\"round\"\r\n          [disabled]=\"(progreso.Progreso < 100 || progreso.NotaCuestionario === 20 || intentospermitidos === 0)? true:false\"\r\n          (click)=\"comprobarrespuesta()\">\r\n              Calificar\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n        <ion-button\r\n          shape=\"round\"\r\n          [disabled]=\"(intentospermitidos === 0)? true:false\"\r\n          (click)=\"otrointento()\">\r\n              Otro Intento\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"12\" *ngIf=\"bandera || progreso.NumeroIntento > 2\">\r\n        <div\r\n        class=\"col_div col_div_final_finalizar\">\r\n        <ion-button\r\n          shape=\"round\"\r\n          (click)=\"finalizar()\">\r\n              Terminar\r\n          </ion-button>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</div>\r\n";
 
 /***/ })
 

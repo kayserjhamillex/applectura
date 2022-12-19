@@ -20,7 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        redirectTo: 'teacher',
+        redirectTo: 'auth',
         pathMatch: 'full'
     },
     {

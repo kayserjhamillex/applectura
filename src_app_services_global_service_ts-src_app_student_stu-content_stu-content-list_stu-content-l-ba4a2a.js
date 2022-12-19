@@ -201,7 +201,13 @@ let StuContentListPage = class StuContentListPage {
         });
     }
     porlectura() {
-        this.librosfiltrados = this.libros;
+        const array = [];
+        for (const item of this.libros) {
+            if (item.libro.Video === '' && item.libro.Audio === '') {
+                array.push(item);
+                this.librosfiltrados = array;
+            }
+        }
         this.vistalibros = true;
         this.vistaeleccion = false;
         this.ruta = 'lectura';
