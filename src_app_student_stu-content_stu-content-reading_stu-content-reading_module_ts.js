@@ -294,12 +294,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StuContentReadingPage": () => (/* binding */ StuContentReadingPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _stu_content_reading_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stu-content-reading.page.html?ngResource */ 4283);
 /* harmony import */ var _stu_content_reading_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stu-content-reading.page.scss?ngResource */ 9548);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 2816);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var src_app_services_libro_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/libro.service */ 7809);
 /* harmony import */ var src_app_services_parrafo_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/parrafo.service */ 5683);
 /* harmony import */ var src_app_services_progreso_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/progreso.service */ 6421);
@@ -373,7 +373,7 @@ let StuContentReadingPage = class StuContentReadingPage {
             spaceBetween: 10,
             grabCursor: true,
             initialSlide: 0,
-            speed: 500
+            speed: 750
         };
         this.existencia = 'no existe';
         this.estado = '';
@@ -400,6 +400,7 @@ let StuContentReadingPage = class StuContentReadingPage {
             this.progresoService.getProgresoidividual(parametro, parestudiante.id).subscribe(resprogreso => {
                 if (resprogreso !== null) {
                     this.progreso = resprogreso;
+                    console.log(this.progreso);
                 }
                 else {
                     this.progresocreate.LibroId = parametro;
@@ -428,23 +429,30 @@ let StuContentReadingPage = class StuContentReadingPage {
     }
     elegir(dato) {
         this.progreso.Reaccion = dato;
+        if (this.progreso.Progreso === 0) {
+            this.progreso.Progreso = 50;
+        }
     }
     deselegir() {
         this.progreso.Reaccion = '';
+        if (this.progreso.Progreso === 50) {
+            this.progreso.Progreso = 0;
+        }
     }
-    slideChanged(event) {
-        this.slides.isEnd().then((istrue) => {
-            if (istrue) {
-                this.validacionultimoslide = 'termino';
-                if (this.progreso.Progreso === 0) {
-                    this.progreso.Progreso = 50;
-                }
-            }
-            else {
-                this.validacionultimoslide = 'aun no termino';
-            }
-        });
-    }
+    // slideChanged(event) {
+    //   this.slides.isEnd().then(
+    //     (istrue) => {
+    //       if (istrue) {
+    //         this.validacionultimoslide = 'termino';
+    //         if (this.progreso.Progreso === 0) {
+    //           this.progreso.Progreso = 50;
+    //         }
+    //       } else {
+    //         this.validacionultimoslide = 'aun no termino';
+    //       }
+    //     }
+    //   );
+    // }
     validarprogreso() {
         if (this.progreso.Progreso < 100) {
             if (this.progreso.Progreso === 50) {
@@ -479,33 +487,42 @@ let StuContentReadingPage = class StuContentReadingPage {
         });
     }
     iracuestionario(dato) {
-        this.actualizar(dato);
-        this.router.navigate([
-            'student',
-            'stu-content',
-            'stu-content-evaluation'
-        ]);
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
+            this.actualizar(dato);
+            yield this.delay(1000);
+            this.router.navigate([
+                'student',
+                'stu-content',
+                'stu-content-evaluation'
+            ]);
+        });
+    }
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
     terminar(dato) {
-        this.actualizar(dato);
-        this.router.navigate([
-            'student',
-            'stu-content'
-        ]);
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
+            this.actualizar(dato);
+            yield this.delay(1000);
+            this.router.navigate([
+                'student',
+                'stu-content'
+            ]);
+        });
     }
 };
 StuContentReadingPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.Router },
     { type: src_app_services_libro_service__WEBPACK_IMPORTED_MODULE_2__.LibroService },
     { type: src_app_services_parrafo_service__WEBPACK_IMPORTED_MODULE_3__.ParrafoService },
     { type: src_app_services_progreso_service__WEBPACK_IMPORTED_MODULE_4__.ProgresoService },
     { type: src_app_services_cuestionario_service__WEBPACK_IMPORTED_MODULE_5__.CuestionarioService }
 ];
 StuContentReadingPage.propDecorators = {
-    slides: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild, args: [_ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonSlides, { static: true },] }]
+    slides: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.ViewChild, args: [_ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonSlides, { static: true },] }]
 };
-StuContentReadingPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+StuContentReadingPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-stu-content-reading',
         template: _stu_content_reading_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_stu_content_reading_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -532,7 +549,7 @@ module.exports = ".col_div_notificacion {\n  position: relative;\n  float: right
   \**************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"main_content_div_child\">\r\n  <div class=\"col_div_notificacion\">\r\n    <ion-icon name=\"notifications-outline\"></ion-icon>\r\n  </div>\r\n  <div class=\"main_content_div animated bounceInUp\">\r\n    <ion-grid fixed>\r\n      <ion-row>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_titulo\">\r\n            <h1>\r\n              {{libro.Titulo}}\r\n            </h1>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_lectura\">\r\n            <ion-slides pager=\"true\" (ionSlideWillChange)=\"slideChanged($event)\" [options]=\"slideOpts\">\r\n              <ion-slide *ngFor=\"let item of parrafos\">\r\n                <img *ngIf=\"item.Imagen !== ''\" [src]=\"item.Imagen\" alt=\"\" srcset=\"\">\r\n                <h1 *ngIf=\"item.Parrafo !== '' && 35 < item.Parrafo.length\">\r\n                  {{item.Parrafo}}\r\n                </h1>\r\n                <h2 *ngIf=\"item.Parrafo !== '' && 35 >= item.Parrafo.length && item.Parrafo.length < 50\">\r\n                  {{item.Parrafo}}\r\n                </h2>\r\n                <h3 *ngIf=\"item.Parrafo !== '' && 50 >= item.Parrafo.length\">\r\n                  {{item.Parrafo}}\r\n                </h3>\r\n              </ion-slide>\r\n            </ion-slides>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_reaccion\">\r\n            <ion-grid fixed>\r\n              <ion-row>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'like'\"\r\n                    src=\"../../../../assets/reacciones/like.png\"\r\n                    alt=\"me gusta\" srcset=\"\" (click)=\"elegir('like')\">\r\n                  </div>\r\n                  <div class=\"elegido\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'like'\"\r\n                    src=\"../../../../assets/reacciones/like-active.png\"\r\n                    alt=\"me gusta activado\" srcset=\"\" (click)=\"deselegir()\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('smile')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'smile'\"\r\n                    src=\"../../../../assets/reacciones/smile.png\"\r\n                    alt=\"me alegra\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'smile'\"\r\n                    src=\"../../../../assets/reacciones/smile-active.png\"\r\n                    alt=\"me alegra activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('sad')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'sad'\"\r\n                    src=\"../../../../assets/reacciones/sad.png\"\r\n                    alt=\"me entristece\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'sad'\"\r\n                    src=\"../../../../assets/reacciones/sad-active.png\"\r\n                    alt=\"me entristece activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('angry')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'angry'\"\r\n                    src=\"../../../../assets/reacciones/angry.png\"\r\n                    alt=\"me enoja\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'angry'\"\r\n                    src=\"../../../../assets/reacciones/angry-active.png\"\r\n                    alt=\"me enoja activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('confused')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'confused'\"\r\n                    src=\"../../../../assets/reacciones/confused.png\"\r\n                    alt=\"me confunde\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'confused'\"\r\n                    src=\"../../../../assets/reacciones/confused-active.png\"\r\n                    alt=\"me confunde activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('amazed')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'amazed'\"\r\n                    src=\"../../../../assets/reacciones/amazed.png\"\r\n                    alt=\"me asombra\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'amazed'\"\r\n                    src=\"../../../../assets/reacciones/amazed-active.png\"\r\n                    alt=\"me asombra activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n              </ion-row>\r\n            </ion-grid>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_formulario\">\r\n            <ion-list>\r\n              <ion-item-group>\r\n                <ion-item-divider>\r\n                  <ion-label>\r\n                    Comentario:\r\n                  </ion-label>\r\n                </ion-item-divider>\r\n                <ion-item class=\"no-border\">\r\n                  <ion-textarea\r\n                    type=\"text\"\r\n                    name=\"Comentario\"\r\n                    required\r\n                    auto-focus\r\n                    tabindex=\"1\"\r\n                    minlength=\"10\"\r\n                    #Comentario=\"ngModel\"\r\n                    [(ngModel)]=\"progreso.Comentario\">\r\n                  </ion-textarea>\r\n                </ion-item>\r\n                <ion-item>\r\n                  <ion-text color=\"danger\" *ngIf=\"Comentario.errors?.minlength\">\r\n                    Escribir un comentario de mas de 10 letras\r\n                  </ion-text>\r\n                </ion-item>\r\n              </ion-item-group>\r\n              <ion-item-group>\r\n                <ion-item-divider>\r\n                  <ion-label>\r\n                    Final Alternativo:\r\n                  </ion-label>\r\n                </ion-item-divider>\r\n                <ion-item>\r\n                  <ion-textarea\r\n                    type=\"text\"\r\n                    name=\"FinalAlternativo\"\r\n                    required\r\n                    tabindex=\"2\"\r\n                    minlength=\"20\"\r\n                    #FinalAlternativo=\"ngModel\"\r\n                    [(ngModel)]=\"progreso.FinalAlternativo\">\r\n                  </ion-textarea>\r\n                </ion-item>\r\n                <ion-item>\r\n                  <ion-text color=\"danger\" *ngIf=\"FinalAlternativo.errors?.minlength\">\r\n                    Escribir un final alternativo de mas de 20 letras\r\n                  </ion-text>\r\n                </ion-item>\r\n              </ion-item-group>\r\n            </ion-list>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\" *ngIf=\"haycuestionario\">\r\n          <div class=\"col_div col_div_final_cuestionario\">\r\n            <ion-button\r\n            [disabled]=\"(progreso.Reaccion === '' || progreso.Comentario.length < 10 || progreso.FinalAlternativo.length < 20)? true:false\"\r\n            shape=\"round\"\r\n            (click)=\"iracuestionario(progreso.id)\">\r\n                Cuestionario\r\n            </ion-button>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\" *ngIf=\"haycuestionario\">\r\n          <div\r\n          class=\"col_div col_div_final_finalizar\">\r\n          <ion-button\r\n            shape=\"round\"\r\n            [disabled]=\"(progreso.Progreso === 0 || progreso.Reaccion === '')? true:false\"\r\n            (click)=\"terminar(progreso.id)\">\r\n                Finalizar sin Cuestionario\r\n            </ion-button>\r\n          </div>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </div>\r\n</div>\r\n";
+module.exports = "<div class=\"main_content_div_child\">\r\n  <div class=\"col_div_notificacion\">\r\n    <ion-icon name=\"notifications-outline\"></ion-icon>\r\n  </div>\r\n  <div class=\"main_content_div animated bounceInUp\">\r\n    <ion-grid fixed>\r\n      <ion-row>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_titulo\">\r\n            <h1>\r\n              {{libro.Titulo}}\r\n            </h1>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_lectura\">\r\n            <!-- <ion-slides pager=\"true\" (ionSlideDidChange)=\"slideChanged($event)\" [options]=\"slideOpts\"> -->\r\n            <ion-slides pager=\"true\" [options]=\"slideOpts\">\r\n              <ion-slide *ngFor=\"let item of parrafos\">\r\n                <img *ngIf=\"item.Imagen !== ''\" [src]=\"item.Imagen\" alt=\"\" srcset=\"\">\r\n                <h1 *ngIf=\"item.Parrafo !== '' && 35 < item.Parrafo.length\">\r\n                  {{item.Parrafo}}\r\n                </h1>\r\n                <h2 *ngIf=\"item.Parrafo !== '' && 35 >= item.Parrafo.length && item.Parrafo.length < 50\">\r\n                  {{item.Parrafo}}\r\n                </h2>\r\n                <h3 *ngIf=\"item.Parrafo !== '' && 50 >= item.Parrafo.length\">\r\n                  {{item.Parrafo}}\r\n                </h3>\r\n              </ion-slide>\r\n            </ion-slides>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_reaccion\">\r\n            <ion-grid fixed>\r\n              <ion-row>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'like'\"\r\n                    src=\"../../../../assets/reacciones/like.png\"\r\n                    alt=\"me gusta\" srcset=\"\" (click)=\"elegir('like')\">\r\n                  </div>\r\n                  <div class=\"elegido\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'like'\"\r\n                    src=\"../../../../assets/reacciones/like-active.png\"\r\n                    alt=\"me gusta activado\" srcset=\"\" (click)=\"deselegir()\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('smile')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'smile'\"\r\n                    src=\"../../../../assets/reacciones/smile.png\"\r\n                    alt=\"me alegra\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'smile'\"\r\n                    src=\"../../../../assets/reacciones/smile-active.png\"\r\n                    alt=\"me alegra activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('sad')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'sad'\"\r\n                    src=\"../../../../assets/reacciones/sad.png\"\r\n                    alt=\"me entristece\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'sad'\"\r\n                    src=\"../../../../assets/reacciones/sad-active.png\"\r\n                    alt=\"me entristece activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('angry')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'angry'\"\r\n                    src=\"../../../../assets/reacciones/angry.png\"\r\n                    alt=\"me enoja\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'angry'\"\r\n                    src=\"../../../../assets/reacciones/angry-active.png\"\r\n                    alt=\"me enoja activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('confused')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'confused'\"\r\n                    src=\"../../../../assets/reacciones/confused.png\"\r\n                    alt=\"me confunde\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'confused'\"\r\n                    src=\"../../../../assets/reacciones/confused-active.png\"\r\n                    alt=\"me confunde activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n                <ion-col size=\"2\">\r\n                  <div class=\"elegible\" (click)=\"elegir('amazed')\">\r\n                    <img *ngIf=\"progreso.Reaccion !== 'amazed'\"\r\n                    src=\"../../../../assets/reacciones/amazed.png\"\r\n                    alt=\"me asombra\" srcset=\"\">\r\n                  </div>\r\n                  <div class=\"elegido\" (click)=\"deselegir()\">\r\n                    <img *ngIf=\"progreso.Reaccion === 'amazed'\"\r\n                    src=\"../../../../assets/reacciones/amazed-active.png\"\r\n                    alt=\"me asombra activado\" srcset=\"\">\r\n                  </div>\r\n                </ion-col>\r\n              </ion-row>\r\n            </ion-grid>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\">\r\n          <div class=\"col_div col_div_formulario\">\r\n            <ion-list>\r\n              <ion-item-group>\r\n                <ion-item-divider>\r\n                  <ion-label>\r\n                    Comentario:\r\n                  </ion-label>\r\n                </ion-item-divider>\r\n                <ion-item class=\"no-border\">\r\n                  <ion-textarea\r\n                    type=\"text\"\r\n                    name=\"Comentario\"\r\n                    required\r\n                    auto-focus\r\n                    tabindex=\"1\"\r\n                    minlength=\"10\"\r\n                    #Comentario=\"ngModel\"\r\n                    [(ngModel)]=\"progreso.Comentario\">\r\n                  </ion-textarea>\r\n                </ion-item>\r\n                <ion-item>\r\n                  <ion-text color=\"danger\" *ngIf=\"Comentario.errors?.minlength\">\r\n                    Escribir un comentario de mas de 10 letras\r\n                  </ion-text>\r\n                </ion-item>\r\n              </ion-item-group>\r\n              <ion-item-group>\r\n                <ion-item-divider>\r\n                  <ion-label>\r\n                    Final Alternativo:\r\n                  </ion-label>\r\n                </ion-item-divider>\r\n                <ion-item>\r\n                  <ion-textarea\r\n                    type=\"text\"\r\n                    name=\"FinalAlternativo\"\r\n                    required\r\n                    tabindex=\"2\"\r\n                    minlength=\"20\"\r\n                    #FinalAlternativo=\"ngModel\"\r\n                    [(ngModel)]=\"progreso.FinalAlternativo\">\r\n                  </ion-textarea>\r\n                </ion-item>\r\n                <ion-item>\r\n                  <ion-text color=\"danger\" *ngIf=\"FinalAlternativo.errors?.minlength\">\r\n                    Escribir un final alternativo de mas de 20 letras\r\n                  </ion-text>\r\n                </ion-item>\r\n              </ion-item-group>\r\n            </ion-list>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\" *ngIf=\"haycuestionario\">\r\n          <div class=\"col_div col_div_final_cuestionario\">\r\n            <ion-button\r\n            [disabled]=\"(progreso.Reaccion === '' || progreso.Comentario.length < 10 || progreso.FinalAlternativo.length < 20)? true:false\"\r\n            shape=\"round\"\r\n            (click)=\"iracuestionario(progreso.id)\">\r\n                Cuestionario\r\n            </ion-button>\r\n          </div>\r\n        </ion-col>\r\n        <ion-col size=\"12\" *ngIf=\"haycuestionario\">\r\n          <div\r\n          class=\"col_div col_div_final_finalizar\">\r\n          <ion-button\r\n            shape=\"round\"\r\n            [disabled]=\"(progreso.Progreso === 0 || progreso.Reaccion === '')? true:false\"\r\n            (click)=\"terminar(progreso.id)\">\r\n                Finalizar sin Cuestionario\r\n            </ion-button>\r\n          </div>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </div>\r\n</div>\r\n";
 
 /***/ })
 

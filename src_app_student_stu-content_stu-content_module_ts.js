@@ -29,10 +29,6 @@ const routes = [
                 loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_services_global_service_ts-src_app_student_stu-content_stu-content-list_stu-content-l-ba4a2a")]).then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-list/stu-content-list.module */ 755)).then(m => m.StuContentListPageModule)
             },
             {
-                path: 'stu-content-select',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_student_stu-content_stu-content-select_stu-content-select_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-select/stu-content-select.module */ 4840)).then(m => m.StuContentSelectPageModule)
-            },
-            {
                 path: 'stu-content-reading',
                 loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_student_stu-content_stu-content-reading_stu-content-reading_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-reading/stu-content-reading.module */ 5226)).then(m => m.StuContentReadingPageModule)
             },
@@ -47,15 +43,6 @@ const routes = [
             {
                 path: 'stu-content-evaluation',
                 loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_student_stu-content_stu-content-evaluation_stu-content-evaluation_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-evaluation/stu-content-evaluation.module */ 2763)).then(m => m.StuContentEvaluationPageModule)
-            },
-            {
-                path: 'stu-content-accompanying',
-                // eslint-disable-next-line max-len
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_services_global_service_ts-src_app_student_stu-content_stu-content-accompanying_stu-c-188854")]).then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-accompanying/stu-content-accompanying.module */ 3221)).then(m => m.StuContentAccompanyingPageModule)
-            },
-            {
-                path: 'stu-content-award',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_student_stu-content_stu-content-award_stu-content-award_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./stu-content-award/stu-content-award.module */ 9571)).then(m => m.StuContentAwardPageModule)
             },
             {
                 path: '',

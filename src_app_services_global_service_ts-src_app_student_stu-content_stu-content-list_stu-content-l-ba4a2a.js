@@ -204,10 +204,12 @@ let StuContentListPage = class StuContentListPage {
         const array = [];
         for (const item of this.libros) {
             if (item.libro.Video === '' && item.libro.Audio === '') {
+                // console.log('Entrando a aqui');
                 array.push(item);
                 this.librosfiltrados = array;
             }
         }
+        console.log(this.librosfiltrados);
         this.vistalibros = true;
         this.vistaeleccion = false;
         this.ruta = 'lectura';
